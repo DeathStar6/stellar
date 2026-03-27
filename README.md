@@ -1,3 +1,10 @@
+
+
+
+
+
+
+<img width="1908" height="860" alt="image" src="https://github.com/user-attachments/assets/b7c11aa0-e27a-446f-a474-5f4a0a379bdb" />
 # 🗳️ Decentralized Polling App (Soroban Smart Contract)
 
 ## 📌 Project Description
