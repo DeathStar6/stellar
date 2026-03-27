@@ -175,7 +175,7 @@ stellar contract invoke --id polling_app --source-account alice --network testne
 
 ## 👨‍💻 Author
 
-**Shin**
+**Subhajit**
 Aspiring developer exploring Blockchain & AI 🚀
 
 ---
