@@ -1,70 +1,179 @@
-# Getting Started with Create React App
+# 🗳️ Decentralized Polling App (Soroban Smart Contract)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 📌 Project Description
 
-## Available Scripts
+This project is a **decentralized polling (voting) application** built using **Soroban smart contracts on the Stellar network**.
+It allows users to create polls, vote on options, and view results — all stored securely on-chain.
 
-In the project directory, you can run:
+The goal of this project is to demonstrate how blockchain can enable **transparent, tamper-proof, and decentralized voting systems**.
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## ⚙️ What It Does
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+* Users can create a poll with a question and multiple options
+* Users can vote for a specific option
+* Votes are stored on-chain using Soroban storage
+* Anyone can retrieve poll results at any time
+* Ensures transparency and immutability
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🚀 Features
 
-### `npm run build`
+* 🧾 **Create Polls**
+  Create polls with custom questions and multiple options
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* 🗳️ **Vote System**
+  Vote for any option in a poll
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* 📊 **Real-time Results**
+  Fetch results instantly from blockchain storage
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* 🔐 **Decentralized Storage**
+  All data is stored on-chain using Soroban
 
-### `npm run eject`
+* ⚡ **Fast & Low Cost**
+  Powered by Stellar’s efficient network
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 🏗️ Tech Stack
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+* **Blockchain:** Stellar (Soroban Smart Contracts)
+* **Language:** Rust
+* **CLI Tools:** Stellar CLI
+* **Frontend (optional):** React + Freighter Wallet
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## 📂 Project Structure
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+AnonymousFeedbackSmartContract/
+│
+├── contracts/
+│   └── hello-world/
+│       └── src/
+│           └── lib.rs   # Smart contract logic
+│
+├── target/             # Build output (WASM)
+├── Cargo.toml
+├── README.md
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## 🧠 Smart Contract Functions
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 1. Create Poll
 
-### Analyzing the Bundle Size
+Creates a new poll with a question and options.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```
+create_poll(question: String, options: Vec<String>)
+```
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 2. Vote
 
-### Advanced Configuration
+Vote for an option in a poll.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```
+vote(poll_id: u64, option_index: u32)
+```
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### 3. Get Results
 
-### `npm run build` fails to minify
+Fetch results of a poll.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```
+get_results(poll_id: u64) -> Map<u32, u32>
+```
+
+---
+
+## ⚡ How to Run
+
+### 1. Build Contract
+
+```
+cargo build --target wasm32v1-none --release
+```
+
+---
+
+### 2. Deploy Contract
+
+```
+stellar contract deploy --wasm target/wasm32v1-none/release/hello_world.wasm --source-account alice --network testnet --alias polling_app
+```
+
+---
+
+### 3. Create Poll
+
+(Using JSON file for options)
+
+```
+stellar contract invoke --id polling_app --source-account alice --network testnet -- create_poll --question "Best language?" --options-file options.json
+```
+
+---
+
+### 4. Vote
+
+```
+stellar contract invoke --id polling_app --source-account alice --network testnet -- vote --poll_id 1 --option_index 0
+```
+
+---
+
+### 5. Get Results
+
+```
+stellar contract invoke --id polling_app --source-account alice --network testnet -- get_results --poll_id 1
+```
+
+---
+
+## 🧪 Example `options.json`
+
+```
+["Rust","JavaScript","Python"]
+```
+
+---
+
+## 🌍 Future Improvements
+
+* 🌐 Frontend UI with React + Freighter
+* 🧑‍🤝‍🧑 User authentication
+* 📊 Graphical result visualization
+* ⏳ Poll expiration time
+* 🔒 One vote per wallet
+
+---
+
+## 💡 Use Cases
+
+* Online voting systems
+* College elections
+* Surveys & feedback collection
+* DAO governance
+
+---
+
+## 👨‍💻 Author
+
+**Shin**
+Aspiring developer exploring Blockchain & AI 🚀
+
+---
+
+## 📜 License
+
+This project is open-source and free to use for learning and development purposes.
