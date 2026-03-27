@@ -120,5 +120,6 @@ stellar contract invoke --id polling_app --source-account alice --network testne
 
 ## 👨‍💻 Author
 
-Shin
+Subhajit
+
 
