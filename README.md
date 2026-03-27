@@ -4,109 +4,62 @@ https://stellar.expert/explorer/testnet/tx/2cb34c2e671053375409ebde84026f007e09c
 
 <img width="1917" height="877" alt="image" src="https://github.com/user-attachments/assets/58221ca7-7a9c-49b7-ba16-78d86bc25465" />
 
-# 🗳️ Decentralized Polling App (Soroban Smart Contract)
+# 🗳️ Stellar Polling App (Soroban Smart Contract)
 
 ## 📌 Project Description
 
-This project is a **decentralized polling (voting) application** built using **Soroban smart contracts on the Stellar network**.
-It allows users to create polls, vote on options, and view results — all stored securely on-chain.
-
-The goal of this project is to demonstrate how blockchain can enable **transparent, tamper-proof, and decentralized voting systems**.
+This project is a decentralized polling application built on the Stellar blockchain using Soroban smart contracts. It allows users to create polls, vote on different options, and retrieve results securely from the blockchain.
 
 ---
 
 ## ⚙️ What It Does
 
-* Users can create a poll with a question and multiple options
-* Users can vote for a specific option
-* Votes are stored on-chain using Soroban storage
-* Anyone can retrieve poll results at any time
-* Ensures transparency and immutability
+* Users can create polls with multiple options
+* Poll data is stored on-chain using Soroban smart contracts
+* Users can vote on any poll option
+* Results are fetched directly from the blockchain
 
 ---
 
 ## 🚀 Features
 
-* 🧾 **Create Polls**
-  Create polls with custom questions and multiple options
-
-* 🗳️ **Vote System**
-  Vote for any option in a poll
-
-* 📊 **Real-time Results**
-  Fetch results instantly from blockchain storage
-
-* 🔐 **Decentralized Storage**
-  All data is stored on-chain using Soroban
-
-* ⚡ **Fast & Low Cost**
-  Powered by Stellar’s efficient network
+* Decentralized poll creation
+* Voting system with option tracking
+* On-chain data storage
+* Result retrieval from smart contract
+* React-based frontend
+* Wallet connection support (Freighter)
 
 ---
 
-## 🏗️ Tech Stack
+## 🛠️ Tech Stack
 
-* **Blockchain:** Stellar (Soroban Smart Contracts)
-* **Language:** Rust
-* **CLI Tools:** Stellar CLI
-* **Frontend (optional):** React + Freighter Wallet
+* **Blockchain:** Stellar (Soroban)
+* **Smart Contract:** Rust
+* **Frontend:** React (Vite)
+* **Wallet:** Freighter
 
 ---
 
 ## 📂 Project Structure
 
 ```
-AnonymousFeedbackSmartContract/
+stellar-connect-wallet/
 │
-├── contracts/
-│   └── hello-world/
-│       └── src/
-│           └── lib.rs   # Smart contract logic
-│
-├── target/             # Build output (WASM)
-├── Cargo.toml
-├── README.md
+├── AnonymousFeedbackSmartContract/   # Smart contract (Rust)
+├── src/                              # Frontend (React)
+├── public/
+├── package.json
 ```
 
 ---
 
-## 🧠 Smart Contract Functions
+## ⚡ Setup & Run
 
-### 1. Create Poll
-
-Creates a new poll with a question and options.
+### 1. Build Smart Contract
 
 ```
-create_poll(question: String, options: Vec<String>)
-```
-
----
-
-### 2. Vote
-
-Vote for an option in a poll.
-
-```
-vote(poll_id: u64, option_index: u32)
-```
-
----
-
-### 3. Get Results
-
-Fetch results of a poll.
-
-```
-get_results(poll_id: u64) -> Map<u32, u32>
-```
-
----
-
-## ⚡ How to Run
-
-### 1. Build Contract
-
-```
+cd AnonymousFeedbackSmartContract/contracts/hello-world
 cargo build --target wasm32v1-none --release
 ```
 
@@ -120,17 +73,26 @@ stellar contract deploy --wasm target/wasm32v1-none/release/hello_world.wasm --s
 
 ---
 
-### 3. Create Poll
-
-(Using JSON file for options)
+### 3. Run Frontend
 
 ```
-stellar contract invoke --id polling_app --source-account alice --network testnet -- create_poll --question "Best language?" --options-file options.json
+npm install
+npm run dev
 ```
 
 ---
 
-### 4. Vote
+## 🧪 Example Commands
+
+### Create Poll
+
+```
+stellar contract invoke --id polling_app --source-account alice --network testnet -- create_poll --question "Best language?" --options-file-path options.json
+```
+
+---
+
+### Vote
 
 ```
 stellar contract invoke --id polling_app --source-account alice --network testnet -- vote --poll_id 1 --option_index 0
@@ -138,7 +100,7 @@ stellar contract invoke --id polling_app --source-account alice --network testne
 
 ---
 
-### 5. Get Results
+### Get Results
 
 ```
 stellar contract invoke --id polling_app --source-account alice --network testnet -- get_results --poll_id 1
@@ -146,40 +108,17 @@ stellar contract invoke --id polling_app --source-account alice --network testne
 
 ---
 
-## 🧪 Example `options.json`
+## 🎯 Future Improvements
 
-```
-["Rust","JavaScript","Python"]
-```
-
----
-
-## 🌍 Future Improvements
-
-* 🌐 Frontend UI with React + Freighter
-* 🧑‍🤝‍🧑 User authentication
-* 📊 Graphical result visualization
-* ⏳ Poll expiration time
-* 🔒 One vote per wallet
-
----
-
-## 💡 Use Cases
-
-* Online voting systems
-* College elections
-* Surveys & feedback collection
-* DAO governance
+* UI for creating and managing polls
+* Live result visualization (charts/graphs)
+* Multiple poll support
+* Better wallet integration
+* Improved UI/UX
 
 ---
 
 ## 👨‍💻 Author
 
-**Subhajit**
-Aspiring developer exploring Blockchain & AI 🚀
+Shin
 
----
-
-## 📜 License
-
-This project is open-source and free to use for learning and development purposes.
