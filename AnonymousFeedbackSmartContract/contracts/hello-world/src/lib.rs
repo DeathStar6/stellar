@@ -1,50 +1,56 @@
 #![no_std]
-use soroban_sdk::{contract, contracttype, contractimpl, Env, String, Symbol, symbol_short};
 
-const COUNT_FB: Symbol = symbol_short!("COUNT_FB");
-
-#[contracttype]
-pub enum FBbook {
-    Feedback(u64)
-}
+use soroban_sdk::{contract, contractimpl, contracttype, Env, Symbol, String, Vec, Map};
 
 #[contracttype]
-#[derive(Clone, Debug)]
-pub struct Feedback {
-    fb_id: u64,
-    message: String,
+#[derive(Clone)]
+pub struct Poll {
+    pub id: u64,
+    pub question: String,
+    pub options: Vec<String>,
 }
+
+const POLL_COUNT: Symbol = Symbol::short("POLL_CNT");
 
 #[contract]
-pub struct Anonymousfeedback;
+pub struct PollingContract;
 
 #[contractimpl]
-impl Anonymousfeedback {
+impl PollingContract {
 
-    pub fn send_feedback(env: Env, feedback_msg: String) -> u64 {
+    // Create Poll
+    pub fn create_poll(env: Env, question: String, options: Vec<String>) -> u64 {
+        let mut count: u64 = env.storage().instance().get(&POLL_COUNT).unwrap_or(0);
+        count += 1;
 
-        let mut fb_count: u64 = env.storage().instance().get(&COUNT_FB).unwrap_or(0);
-        fb_count += 1;
+        let poll = Poll {
+            id: count,
+            question,
+            options,
+        };
 
-        let mut fb_details = Self::fetch_feedback(env.clone(), fb_count.clone());
+        env.storage().instance().set(&count, &poll);
+        env.storage().instance().set(&POLL_COUNT, &count);
 
-        fb_details.fb_id = fb_count;
-        fb_details.message = feedback_msg;
-
-        env.storage().instance().set(&FBbook::Feedback(fb_details.fb_id.clone()), &fb_details);
-        env.storage().instance().set(&COUNT_FB, &fb_details.fb_id.clone());
-        env.storage().instance().extend_ttl(5000, 5000);
-
-        return fb_details.fb_id;
+        count
     }
 
-    pub fn fetch_feedback(env: Env, fb_id: u64) -> Feedback {
+    // Vote
+    pub fn vote(env: Env, poll_id: u64, option_index: u32) {
+        let key = (poll_id, Symbol::short("VOTES"));
 
-        let key = FBbook::Feedback(fb_id.clone());
+        let mut votes: Map<u32, u32> =
+            env.storage().instance().get(&key).unwrap_or(Map::new(&env));
 
-        env.storage().instance().get(&key).unwrap_or(Feedback {
-            fb_id: 0,
-            message: String::from_str(&env, "Invalid feedback ID!")
-        })
+        let current = votes.get(option_index).unwrap_or(0);
+        votes.set(option_index, current + 1);
+
+        env.storage().instance().set(&key, &votes);
+    }
+
+    // Get Results
+    pub fn get_results(env: Env, poll_id: u64) -> Map<u32, u32> {
+        let key = (poll_id, Symbol::short("VOTES"));
+        env.storage().instance().get(&key).unwrap_or(Map::new(&env))
     }
 }
