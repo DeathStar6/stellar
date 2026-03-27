@@ -1,11 +1,9 @@
-https://stellar.expert/explorer/testnet/tx/0d5ed51fe4b6ff3d90860d43a592e8387c93d8144dd28658c6731e9f31ba180d
+
+https://stellar.expert/explorer/testnet/tx/2cb34c2e671053375409ebde84026f007e09c5af1e304a945374092dba02e0bb
 
 
+<img width="1917" height="877" alt="image" src="https://github.com/user-attachments/assets/58221ca7-7a9c-49b7-ba16-78d86bc25465" />
 
-
-
-
-<img width="1908" height="860" alt="image" src="https://github.com/user-attachments/assets/b7c11aa0-e27a-446f-a474-5f4a0a379bdb" />
 # 🗳️ Decentralized Polling App (Soroban Smart Contract)
 
 ## 📌 Project Description
